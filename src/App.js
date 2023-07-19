@@ -1,25 +1,16 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import ShowExpense from "./ShowExpense";
+import AddItem from "./AddItem";
+import "./index.css";
 
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+     <h1>expense tracker app</h1>
+      <h2>Add a new item:</h2>
+      <AddItem />
+      <ShowExpense />
+      <ul id="display"></ul>
     </div>
   );
 }
-
-export default App;
