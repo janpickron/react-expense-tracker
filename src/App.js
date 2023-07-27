@@ -2,46 +2,42 @@ import React, { useEffect, useState } from "react";
 import "./index.css";
 
 export default function App() {
+  // declare useState expense input and value are empty
+  const [expenseArray, setExpenseArray] = useState([]);
+  const [date, setDate] = useState("");
+  const [description, setDescription] = useState("");
+  const [payment, setPayment] = useState("");
+  const [amount, setAmount] = useState("");
+
   // Load expenses from localStorage when the app starts
-  const storedExpense = JSON.parse(localStorage.getItem("expenseArray"));
-  
-  // declare useState expense
-  const [expenseArray, setExpenseArray] = useState(storedExpense);
-
-  // Save expenses to localStorage whenever the expenses state changes
   useEffect(() => {
-  localStorage.setItem("expenseArray", JSON.stringify(expenseArray))
-}, [expenseArray]);
+    const itemFromLs = JSON.parse(localStorage.getItem("expenseArray"));
+    setExpenseArray(itemFromLs);
+  }, []);
 
-  // add a new expense on top of the existing one and using setExpenseArray and previous expenseArray with new
-  //  array with all of the previous expenses
-
-  let addExpense = (x) => {
-    setExpenseArray((prevExpenseArray) => {
-      return [...prevExpenseArray, x];
-    });
+  // we are constructing the object that we want to add to the array
+  const formObject = {
+    date: date,
+    description: description,
+    payment: payment,
+    amount: amount,
   };
 
-  // the function handleClick call when user clicks on the button
+  // function handleClick call when user clicks on the Add button
   const handleClick = (event) => {
+
     // browser will not be refreshed so that we will not lose the current state
     event.preventDefault();
 
-    // getting values from the form inputs
-    const getdate = event.target.getdate.value;
-    const payment = event.target.payment.value;
-    const amount = event.target.amount.value;
-    const description = event.target.description.value;
+    // we need to grab all items from the inputs and add them to expenseArray
+    // grab the form object - and add to the array
+    setExpenseArray([...expenseArray, formObject]);
 
-    // if user did not input anything in the form, alert message will pop up
-    if (!getdate || !amount || !amount || !description) {
-      alert("Please fill in all fields.");
-      return;
-    }
-
-    // call function addExpense
-    addExpense({ getdate, payment, amount, description });
-    // reset all of the input fields of the form after submitting
+    // set localStorage here as soon as we add object to array
+    localStorage.setItem(
+      "expenseArray",
+      JSON.stringify([...expenseArray, formObject])
+    );
     event.target.reset();
   };
 
@@ -52,20 +48,31 @@ export default function App() {
         <h1>expense tracker app</h1>
         <h2>Add a new item:</h2>
         <div>
-          Date: <input type="date" name="getdate" id="getDate" />
+          Date:{" "}
+          <input required
+            type="date"
+            name="date"
+            id="date"
+            onChange={(event) => setDate(event.target.value)}
+          />
         </div>
         <div>
           Description:
-          <input
+          <input required
             type="text"
             name="description"
             id="getDescription"
             placeholder="Add a new expense"
+            onChange={(event) => setDescription(event.target.value)}
           />
         </div>
         <div>
           Payment:
-          <select name="payment" id="getPayment">
+          <select required
+            name="payment"
+            id="getPayment"
+            onChange={(event) => setPayment(event.target.value)}
+          >
             <option value="card">Card</option>
             <option value="cash">Cash</option>
             <option value="debit">Debit</option>
@@ -74,17 +81,22 @@ export default function App() {
         </div>
         <div>
           Amount:
-          <input
+          <input required
             type="number"
             name="amount"
             id="getAmount"
             placeholder=" $ Amount?"
+            onChange={(event) => setAmount(event.target.value)}
           />
         </div>
         <br /> <br />
-        <button type="submit" id="button">
-          Add a new expense
-        </button>
+        <button type="submit" id="button">Add a new expense</button>
+        <button type="button" id="button"
+         onChange={(event) => {   
+            localStorage.clear();
+            expenseArray = [];
+         }
+        }>Add a new expense</button>
       </form>
 
       <h1>Expense Tracker</h1>
@@ -99,18 +111,24 @@ export default function App() {
         </thead>
         <tbody>
           {/* loop through all of the values that is stored in the expenseArray and sorted by date */}
-          {expenseArray
-            .sort((a, b) => new Date(a.getdate) - new Date(b.getdate))
-            .map((x, index) => (
-              <tr key={index}>
-                <td>{x.getdate}</td>
-                <td>{x.payment}</td>
-                <td>${x.amount}</td>
-                <td>{x.description}</td>
-              </tr>
-            ))}
+          {expenseArray.map((x, index) => (
+            <tr key={index}>
+              <td>{x.date}</td>
+              <td>{x.payment}</td>
+              <td>${x.amount}</td>
+              <td>{x.description}</td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>
   );
 }
+
+// homework :
+// x 1. Reset every input value per input when I click on the button
+// 2. Add a button to clear all expenses from LS
+//  3. Add validation on each of the inputs
+// x 4. Implement the required attribute in inputs
+// 5. Update Read me
+// 6. Push changes to GH
