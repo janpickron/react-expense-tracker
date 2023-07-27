@@ -25,7 +25,6 @@ export default function App() {
 
   // function handleClick call when user clicks on the Add button
   const handleClick = (event) => {
-
     // browser will not be refreshed so that we will not lose the current state
     event.preventDefault();
 
@@ -41,6 +40,11 @@ export default function App() {
     event.target.reset();
   };
 
+  let handleClickAllClear = () => {
+    localStorage.clear();
+    expenseArray([]);
+  };
+
   return (
     <div className="container">
       {/* function handleClick call  */}
@@ -48,8 +52,9 @@ export default function App() {
         <h1>expense tracker app</h1>
         <h2>Add a new item:</h2>
         <div>
-          Date:{" "}
-          <input required
+          Date:
+          <input
+            required
             type="date"
             name="date"
             id="date"
@@ -58,7 +63,8 @@ export default function App() {
         </div>
         <div>
           Description:
-          <input required
+          <input
+            required
             type="text"
             name="description"
             id="getDescription"
@@ -68,7 +74,8 @@ export default function App() {
         </div>
         <div>
           Payment:
-          <select required
+          <select
+            required
             name="payment"
             id="getPayment"
             onChange={(event) => setPayment(event.target.value)}
@@ -81,7 +88,8 @@ export default function App() {
         </div>
         <div>
           Amount:
-          <input required
+          <input
+            required
             type="number"
             name="amount"
             id="getAmount"
@@ -90,13 +98,11 @@ export default function App() {
           />
         </div>
         <br /> <br />
-        <button type="submit" id="button">Add a new expense</button>
-        <button type="button" id="button"
-         onChange={(event) => {   
-            localStorage.clear();
-            expenseArray = [];
-         }
-        }>Add a new expense</button>
+        <button type="submit" id="button">
+          Add a new expense
+        </button>
+        <button type="button" id="button" onClick={handleClickAllClear}>
+          Clear All</button>
       </form>
 
       <h1>Expense Tracker</h1>
@@ -122,13 +128,14 @@ export default function App() {
         </tbody>
       </table>
     </div>
+    
   );
 }
 
 // homework :
 // x 1. Reset every input value per input when I click on the button
-// 2. Add a button to clear all expenses from LS
-//  3. Add validation on each of the inputs
+// X 2. Add a button to clear all expenses from LS
+// X 3. Add validation on each of the inputs
 // x 4. Implement the required attribute in inputs
 // 5. Update Read me
 // 6. Push changes to GH
