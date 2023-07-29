@@ -2,22 +2,27 @@ import React, { useEffect, useState } from "react";
 import "./index.css";
 
 export default function App() {
-  // declare useState expense input and value are empty
+  // declare useState expense input
+  // expenseArray is the variable [] -> empty array
+  // if change or put something in side then use the setExpenseArray
   const [expenseArray, setExpenseArray] = useState([]);
+
+  // declare useState and they are empty. Input variables date, description, payment, amount are empty
   const [date, setDate] = useState("");
   const [description, setDescription] = useState("");
   const [payment, setPayment] = useState("");
   const [amount, setAmount] = useState("");
 
-  console.log('expressArray is :' + expenseArray)
-  console.log('date/desc/pay/amount :' + date, description, payment, amount)
-
   // Load expenses from localStorage when the app starts
   useEffect(() => {
     const itemFromLs = JSON.parse(localStorage.getItem("expenseArray"));
-    setExpenseArray(itemFromLs);
+   // if itemFromLs is not empty then put values into setExpenseArray from object 
+   // however if it is empty then do not put values 
+    if (itemFromLs) {
+      setExpenseArray(itemFromLs);
+    }
   }, []);
-console.log('useEffect :' + useEffect)
+
   // we are constructing the object that we want to add to the array
   const formObject = {
     date: date,
@@ -25,29 +30,29 @@ console.log('useEffect :' + useEffect)
     payment: payment,
     amount: amount,
   };
-console.log('formObject is: ' + formObject)
+
   // function handleClick call when user clicks on the Add button
   const handleClick = (event) => {
     // browser will not be refreshed so that we will not lose the current state
     event.preventDefault();
 
-    // we need to grab all items from the inputs and add them to expenseArray
+    // need to grab all items from the inputs and add them to expenseArray
     // grab the form object - and add to the array
     setExpenseArray([...expenseArray, formObject]);
- console.log('setExpressArray is :' + setExpenseArray)
+
     // set localStorage here as soon as we add object to array
     localStorage.setItem(
       "expenseArray",
       JSON.stringify([...expenseArray, formObject])
     );
-    console.log('localStorage setItem is ' + localStorage.setItem)
+
+    // clear the input left on the fields after clicked "Add" button
     event.target.reset();
   };
-console.log('before RETURN to get value from ' + expenseArray)
+  
   let handleClickAllClear = () => {
-    console.log('localStorage clear is ' + localStorage.clear())
     localStorage.clear();
-    expenseArray.clear();
+    setExpenseArray([]);
   };
 
   return (
@@ -107,7 +112,8 @@ console.log('before RETURN to get value from ' + expenseArray)
           Add a new expense
         </button>
         <button type="button" id="button" onClick={handleClickAllClear}>
-          Clear All Expenses</button>
+          Clear All Expenses
+        </button>
       </form>
 
       <h1>Expense Tracker</h1>
@@ -122,25 +128,19 @@ console.log('before RETURN to get value from ' + expenseArray)
         </thead>
         <tbody>
           {/* loop through all of the values that is stored in the expenseArray and sorted by date */}
-          {expenseArray && expenseArray.map((x, index) => (
-            <tr key={index}>
-              <td>{x.date}</td>
-              <td>{x.payment}</td>
-              <td>${x.amount}</td>
-              <td>{x.description}</td>
-            </tr>
-          ))}
+          {expenseArray &&
+            expenseArray
+            // .sort((a, b) => new Date(a.date) - new Date(b.date))   -- hold off for now -- sorted fine
+            .map((x, index) => (
+              <tr key={index}>
+                <td>{x.date}</td>
+                <td>{x.payment}</td>
+                <td>${x.amount}</td>
+                <td>{x.description}</td>
+              </tr>
+            ))}
         </tbody>
       </table>
     </div>
-    
   );
 }
-
-// homework :
-// x 1. Reset every input value per input when I click on the button
-// X 2. Add a button to clear all expenses from LS
-// X 3. Add validation on each of the inputs
-// x 4. Implement the required attribute in inputs
-// 5. Update Read me
-// 6. Push changes to GH
