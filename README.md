@@ -19,6 +19,8 @@ This is a simple expense tracker app built with React that allows you to track y
 4. To clear all data in all expenses, click on the "Clear All" button next to the "Add a new expense" button.
 
 5. Your expenses will be saved in the browser's `localStorage`, so you can close the app and come back later to see your data still intact.
+
+![My Image](README.jpg)
 ## Installation
 
 To run the Expense Tracker app locally on your machine, follow these steps:
