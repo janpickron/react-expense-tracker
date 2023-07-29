@@ -9,12 +9,15 @@ export default function App() {
   const [payment, setPayment] = useState("");
   const [amount, setAmount] = useState("");
 
+  console.log('expressArray is :' + expenseArray)
+  console.log('date/desc/pay/amount :' + date, description, payment, amount)
+
   // Load expenses from localStorage when the app starts
   useEffect(() => {
     const itemFromLs = JSON.parse(localStorage.getItem("expenseArray"));
     setExpenseArray(itemFromLs);
   }, []);
-
+console.log('useEffect :' + useEffect)
   // we are constructing the object that we want to add to the array
   const formObject = {
     date: date,
@@ -22,7 +25,7 @@ export default function App() {
     payment: payment,
     amount: amount,
   };
-
+console.log('formObject is: ' + formObject)
   // function handleClick call when user clicks on the Add button
   const handleClick = (event) => {
     // browser will not be refreshed so that we will not lose the current state
@@ -31,18 +34,20 @@ export default function App() {
     // we need to grab all items from the inputs and add them to expenseArray
     // grab the form object - and add to the array
     setExpenseArray([...expenseArray, formObject]);
-
+ console.log('setExpressArray is :' + setExpenseArray)
     // set localStorage here as soon as we add object to array
     localStorage.setItem(
       "expenseArray",
       JSON.stringify([...expenseArray, formObject])
     );
+    console.log('localStorage setItem is ' + localStorage.setItem)
     event.target.reset();
   };
-
+console.log('before RETURN to get value from ' + expenseArray)
   let handleClickAllClear = () => {
+    console.log('localStorage clear is ' + localStorage.clear())
     localStorage.clear();
-    expenseArray([]);
+    expenseArray.clear();
   };
 
   return (
@@ -102,7 +107,7 @@ export default function App() {
           Add a new expense
         </button>
         <button type="button" id="button" onClick={handleClickAllClear}>
-          Clear All</button>
+          Clear All Expenses</button>
       </form>
 
       <h1>Expense Tracker</h1>
@@ -117,7 +122,7 @@ export default function App() {
         </thead>
         <tbody>
           {/* loop through all of the values that is stored in the expenseArray and sorted by date */}
-          {expenseArray.map((x, index) => (
+          {expenseArray && expenseArray.map((x, index) => (
             <tr key={index}>
               <td>{x.date}</td>
               <td>{x.payment}</td>

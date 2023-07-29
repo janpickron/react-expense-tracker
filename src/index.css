@@ -80,6 +80,7 @@ td {
 }
 
 #button {
+  margin: 10px;
   font-size: 18px;
   background-color: lightgrey;
   padding: 10px;

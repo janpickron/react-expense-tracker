@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./index.css";
 
 
-export default function App() {
+export default function App_jan() {
   // Load expenses from localStorage when the app starts
   const storedExpense = JSON.parse(localStorage.getItem("expenseArray"));
 
@@ -101,9 +101,8 @@ export default function App() {
         <tbody>
           {/* loop through all of the values that is stored in the expenseArray and sorted by date */}
           {expenseArray
-            // new Date => creates a brand new datestamp
+            // new Date => creates a brand new date stamp
             .sort((a, b) => new Date(a.getdate) - new Date(b.getdate))
-            
             .map((x, index) => (
               <tr key={index}>
                 <td>{x.getdate}</td>
