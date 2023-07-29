@@ -2,6 +2,7 @@
 
 This is a simple expense tracker app built with React that allows you to track your expenses and sort them by date. The app uses `localStorage` to save your expenses, so you won't lose your data even if you close the browser.
 
+![My Image](exp_tracker_app.png)
 ## Features
 
 - Add new expenses with a date, type of payment, amount, and description.
@@ -20,7 +21,6 @@ This is a simple expense tracker app built with React that allows you to track y
 
 5. Your expenses will be saved in the browser's `localStorage`, so you can close the app and come back later to see your data still intact.
 
-![My Image](./README.jpg)
 ## Installation
 
 To run the Expense Tracker app locally on your machine, follow these steps:
